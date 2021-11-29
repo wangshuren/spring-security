@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wsr.dao.TSysUserAuthDao">
+  <resultMap id="BaseResultMap" type="com.wsr.entity.SysUserAuth">
+    <id column="auth_id" jdbcType="BIGINT" property="authId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="identity_type" jdbcType="TINYINT" property="identityType" />
+    <result column="identifier" jdbcType="VARCHAR" property="identifier" />
+    <result column="credential" jdbcType="VARCHAR" property="credential" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="sys_type" jdbcType="VARCHAR" property="sysType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    auth_id, user_id, identity_type, identifier, credential, salt, sys_type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_sys_user_auth
+    where auth_id = #{authId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_sys_user_auth
+    where auth_id = #{authId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="auth_id" keyProperty="authId" parameterType="com.wsr.entity.SysUserAuth" useGeneratedKeys="true">
+    insert into t_sys_user_auth (user_id, identity_type, identifier,
+      credential, salt, sys_type
+      )
+    values (#{userId,jdbcType=BIGINT}, #{identityType,jdbcType=TINYINT}, #{identifier,jdbcType=VARCHAR},
+      #{credential,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{sysType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="auth_id" keyProperty="authId" parameterType="com.wsr.entity.SysUserAuth" useGeneratedKeys="true">
+    insert into t_sys_user_auth
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="identityType != null">
+        identity_type,
+      </if>
+      <if test="identifier != null">
+        identifier,
+      </if>
+      <if test="credential != null">
+        credential,
+      </if>
+      <if test="salt != null">
+        salt,
+      </if>
+      <if test="sysType != null">
+        sys_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="identityType != null">
+        #{identityType,jdbcType=TINYINT},
+      </if>
+      <if test="identifier != null">
+        #{identifier,jdbcType=VARCHAR},
+      </if>
+      <if test="credential != null">
+        #{credential,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="sysType != null">
+        #{sysType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wsr.entity.SysUserAuth">
+    update t_sys_user_auth
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="identityType != null">
+        identity_type = #{identityType,jdbcType=TINYINT},
+      </if>
+      <if test="identifier != null">
+        identifier = #{identifier,jdbcType=VARCHAR},
+      </if>
+      <if test="credential != null">
+        credential = #{credential,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="sysType != null">
+        sys_type = #{sysType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where auth_id = #{authId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wsr.entity.SysUserAuth">
+    update t_sys_user_auth
+    set user_id = #{userId,jdbcType=BIGINT},
+      identity_type = #{identityType,jdbcType=TINYINT},
+      identifier = #{identifier,jdbcType=VARCHAR},
+      credential = #{credential,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      sys_type = #{sysType,jdbcType=VARCHAR}
+    where auth_id = #{authId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByLogin" resultMap="BaseResultMap">
+    select a.*
+    from t_sys_user_auth a
+    left join t_sys_user u on a.user_id = u.sys_user_id
+    where a.identity_type = #{identifyType} and a.identifier = #{identifier} and a.sys_type = #{sysType}
+  </select>
+</mapper>

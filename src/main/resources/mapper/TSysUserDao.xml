@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wsr.dao.TSysUserDao">
+  <resultMap id="BaseResultMap" type="com.wsr.entity.SysUser">
+    <id column="sys_user_id" jdbcType="BIGINT" property="sysUserId" />
+    <result column="login_username" jdbcType="VARCHAR" property="loginUsername" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="telphone" jdbcType="VARCHAR" property="telphone" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="user_no" jdbcType="VARCHAR" property="userNo" />
+    <result column="is_admin" jdbcType="TINYINT" property="isAdmin" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="sys_type" jdbcType="VARCHAR" property="sysType" />
+    <result column="belong_info_id" jdbcType="VARCHAR" property="belongInfoId" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sys_user_id, login_username, realname, telphone, sex, avatar_url, user_no, is_admin,
+    `state`, sys_type, belong_info_id, created_at, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_sys_user
+    where sys_user_id = #{sysUserId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_sys_user
+    where sys_user_id = #{sysUserId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="sys_user_id" keyProperty="sysUserId" parameterType="com.wsr.entity.SysUser" useGeneratedKeys="true">
+    insert into t_sys_user (login_username, realname, telphone,
+      sex, avatar_url, user_no,
+      is_admin, `state`, sys_type,
+      belong_info_id, created_at, updated_at
+      )
+    values (#{loginUsername,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, #{telphone,jdbcType=VARCHAR},
+      #{sex,jdbcType=TINYINT}, #{avatarUrl,jdbcType=VARCHAR}, #{userNo,jdbcType=VARCHAR},
+      #{isAdmin,jdbcType=TINYINT}, #{state,jdbcType=TINYINT}, #{sysType,jdbcType=VARCHAR},
+      #{belongInfoId,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="sys_user_id" keyProperty="sysUserId" parameterType="com.wsr.entity.SysUser" useGeneratedKeys="true">
+    insert into t_sys_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="loginUsername != null">
+        login_username,
+      </if>
+      <if test="realname != null">
+        realname,
+      </if>
+      <if test="telphone != null">
+        telphone,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="avatarUrl != null">
+        avatar_url,
+      </if>
+      <if test="userNo != null">
+        user_no,
+      </if>
+      <if test="isAdmin != null">
+        is_admin,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="sysType != null">
+        sys_type,
+      </if>
+      <if test="belongInfoId != null">
+        belong_info_id,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="loginUsername != null">
+        #{loginUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null">
+        #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="avatarUrl != null">
+        #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userNo != null">
+        #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isAdmin != null">
+        #{isAdmin,jdbcType=TINYINT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="sysType != null">
+        #{sysType,jdbcType=VARCHAR},
+      </if>
+      <if test="belongInfoId != null">
+        #{belongInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wsr.entity.SysUser">
+    update t_sys_user
+    <set>
+      <if test="loginUsername != null">
+        login_username = #{loginUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null">
+        telphone = #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="avatarUrl != null">
+        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userNo != null">
+        user_no = #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isAdmin != null">
+        is_admin = #{isAdmin,jdbcType=TINYINT},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="sysType != null">
+        sys_type = #{sysType,jdbcType=VARCHAR},
+      </if>
+      <if test="belongInfoId != null">
+        belong_info_id = #{belongInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sys_user_id = #{sysUserId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wsr.entity.SysUser">
+    update t_sys_user
+    set login_username = #{loginUsername,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=TINYINT},
+      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      user_no = #{userNo,jdbcType=VARCHAR},
+      is_admin = #{isAdmin,jdbcType=TINYINT},
+      `state` = #{state,jdbcType=TINYINT},
+      sys_type = #{sysType,jdbcType=VARCHAR},
+      belong_info_id = #{belongInfoId,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where sys_user_id = #{sysUserId,jdbcType=BIGINT}
+  </update>
+  <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_sys_user
+    where sys_user_id = #{sysUserId,jdbcType=BIGINT}
+  </select>
+
+
+</mapper>

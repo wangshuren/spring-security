@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wsr.dao.TSysUserRoleRelaDao">
+  <resultMap id="BaseResultMap" type="com.wsr.entity.TSysUserRoleRela">
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <id column="role_id" jdbcType="VARCHAR" property="roleId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.wsr.entity.TSysUserRoleRela">
+    delete from t_sys_user_role_rela
+    where user_id = #{userId,jdbcType=BIGINT}
+      and role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="user_id" keyProperty="userId" parameterType="com.wsr.entity.TSysUserRoleRela" useGeneratedKeys="true">
+    insert into t_sys_user_role_rela (role_id)
+    values (#{roleId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="user_id" keyProperty="userId" parameterType="com.wsr.entity.TSysUserRoleRela" useGeneratedKeys="true">
+    insert into t_sys_user_role_rela
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    user_id,role_id
+    from t_sys_user_role_rela
+    where user_id = #{userId}
+  </select>
+</mapper>
